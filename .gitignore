@@ -29,4 +29,6 @@
 /config/master.key
 
 # Rubymine
-.idea
+/.idea
+
+/spec/examples.txt
