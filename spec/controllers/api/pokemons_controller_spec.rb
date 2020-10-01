@@ -82,5 +82,14 @@ RSpec.describe Api::PokemonsController do
         expect(response.status).to eq(422)
       end
     end
+
+    context 'invalid pokemon id' do
+      let(:params) { { id: 1337, pokemon: { name: 'Picka v2' } } }
+
+      it 'responds with an HTTP 404 status code' do
+        put :update, params: params
+        expect(response.status).to eq(404)
+      end
+    end
   end
 end
