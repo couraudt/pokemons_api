@@ -12,20 +12,21 @@ Install Docker and [Docker Compose](https://docs.docker.com/compose/install/)
 docker-compose build
 ```
 
+### Start web server
+
+```bash
+docker-compose up -d
+```
+
 ### Migration
 
 ```bash
-docker-compose exec app rake db:migrate
+docker-compose exec app bundle exec rake db:migrate
 ```
 
 ### Import csv into db
 
 ```bash
-docker-compose exec app rake db:seed
+docker-compose exec app bundle exec rake db:seed
 ```
 
-## Start web server
-
-```bash
-docker-compose up
-```
