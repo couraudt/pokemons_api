@@ -28,6 +28,7 @@ end
 
 group :test do
   gem 'factory_bot_rails'
+  gem 'test-prof'
 end
 
 group :development do
