@@ -2,7 +2,7 @@
 
 module Api
   class PokemonsController < ApplicationController
-    before_action :find_pokemon, only: %i[show update]
+    before_action :find_pokemon, only: %i[show update destroy]
 
     def index
       @pokemons = Pokemon.all
@@ -25,6 +25,11 @@ module Api
       else
         render_errors(@pokemon.errors)
       end
+    end
+
+    def destroy
+      @pokemon.destroy
+      head :ok
     end
 
     private

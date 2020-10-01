@@ -92,4 +92,25 @@ RSpec.describe Api::PokemonsController do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    context 'valid information' do
+      it 'responds successfully with an HTTP 200 status code' do
+        delete :destroy, params: { id: pokemon.id }
+        expect(response).to be_successful
+        expect(response.status).to eq(200)
+      end
+
+      it 'delete the pokemon in db' do
+        expect { delete :destroy, params: { id: pokemon.id } }.to change { Pokemon.count }.by(-1)
+      end
+    end
+
+    context 'invalid pokemon id' do
+      it 'responds with an HTTP 404 status code' do
+        delete :destroy, params: { id: 1337 }
+        expect(response.status).to eq(404)
+      end
+    end
+  end
 end

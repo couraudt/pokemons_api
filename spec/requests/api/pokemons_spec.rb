@@ -82,4 +82,11 @@ RSpec.describe 'Pokemons API' do
       end
     end
   end
+
+  describe 'DELETE /api/pokemons/:id' do
+    it 'returns no json' do
+      delete api_pokemon_path(id: pokemon.id)
+      expect(response.body).to eq('')
+    end
+  end
 end
