@@ -14,14 +14,12 @@ ENV APP_HOME /app
 
 WORKDIR $APP_HOME
 
-COPY Gemfile Gemfile.lock ./
-
 RUN bundle config build.nokogiri --use-system-libraries
-
-RUN bundle check || bundle install
 
 COPY . ./
 
-ENTRYPOINT ["bundle", "exec"]
+RUN chmod +x ./docker-entrypoint.sh
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
 
 CMD ["rails", "server", "-b", "0.0.0.0"]
