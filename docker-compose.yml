@@ -12,6 +12,7 @@ services:
       - gem_cache:/usr/local/bundle/gems
     environment:
       RAILS_ENV: development
+      RAILS_LOG_TO_STDOUT: 1
 
 volumes:
   gem_cache:
