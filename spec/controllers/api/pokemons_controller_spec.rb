@@ -7,7 +7,7 @@ RSpec.describe Api::PokemonsController do
 
   describe 'GET #index' do
     it 'responds successfully with an HTTP 200 status code' do
-      get :index, format: :json
+      get :index
       expect(response).to be_successful
       expect(response.status).to eq(200)
     end
@@ -16,7 +16,7 @@ RSpec.describe Api::PokemonsController do
   describe 'GET #show' do
     context 'valid pokemon id' do
       it 'responds successfully with an HTTP 200 status code' do
-        get :show, params: { id: pokemon.id }, format: :json
+        get :show, params: { id: pokemon.id }
         expect(response).to be_successful
         expect(response.status).to eq(200)
       end
@@ -24,7 +24,7 @@ RSpec.describe Api::PokemonsController do
 
     context 'invalid pokemon id' do
       it 'responds with an HTTP 404 status code' do
-        get :show, params: { id: 1337 }, format: :json
+        get :show, params: { id: 1337 }
         expect(response.status).to eq(404)
       end
     end
