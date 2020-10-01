@@ -41,9 +41,10 @@ RSpec.describe 'Pokemons API' do
     end
 
     context 'invalid pokemon id' do
-      it 'returns no json' do
+      it 'returns 404 message' do
         get api_pokemon_path(1337)
-        expect(response.body).to eq('')
+        expect(json['code']).to eq('404')
+        expect(json['message']).to eq('Not found')
       end
     end
   end
@@ -94,17 +95,28 @@ RSpec.describe 'Pokemons API' do
     context 'invalid pokemon id' do
       let(:params) { { id: 1337, pokemon: { name: 'Picka v2' } } }
 
-      it 'returns no json' do
+      it 'returns 404 message' do
         put api_pokemon_path(params)
-        expect(response.body).to eq('')
+        expect(json['code']).to eq('404')
+        expect(json['message']).to eq('Not found')
       end
     end
   end
 
   describe 'DELETE /api/pokemons/:id' do
-    it 'returns no json' do
-      delete api_pokemon_path(id: pokemon.id)
-      expect(response.body).to eq('')
+    context 'valid pokemon id' do
+      it 'returns no json' do
+        delete api_pokemon_path(id: pokemon.id)
+        expect(response.body).to eq('')
+      end
+    end
+
+    context 'invalid pokemon id' do
+      it 'returns 404 message' do
+        delete api_pokemon_path(id: 1337)
+        expect(json['code']).to eq('404')
+        expect(json['message']).to eq('Not found')
+      end
     end
   end
 end

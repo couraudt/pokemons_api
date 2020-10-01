@@ -14,19 +14,10 @@ RSpec.describe Api::PokemonsController do
   end
 
   describe 'GET #show' do
-    context 'valid pokemon id' do
-      it 'responds successfully with an HTTP 200 status code' do
-        get :show, params: { id: pokemon.id }
-        expect(response).to be_successful
-        expect(response.status).to eq(200)
-      end
-    end
-
-    context 'invalid pokemon id' do
-      it 'responds with an HTTP 404 status code' do
-        get :show, params: { id: 1337 }
-        expect(response.status).to eq(404)
-      end
+    it 'responds successfully with an HTTP 200 status code' do
+      get :show, params: { id: pokemon.id }
+      expect(response).to be_successful
+      expect(response.status).to eq(200)
     end
   end
 
@@ -82,15 +73,6 @@ RSpec.describe Api::PokemonsController do
         expect(response.status).to eq(422)
       end
     end
-
-    context 'invalid pokemon id' do
-      let(:params) { { id: 1337, pokemon: { name: 'Picka v2' } } }
-
-      it 'responds with an HTTP 404 status code' do
-        put :update, params: params
-        expect(response.status).to eq(404)
-      end
-    end
   end
 
   describe 'DELETE #destroy' do
@@ -103,13 +85,6 @@ RSpec.describe Api::PokemonsController do
 
       it 'delete the pokemon in db' do
         expect { delete :destroy, params: { id: pokemon.id } }.to change { Pokemon.count }.by(-1)
-      end
-    end
-
-    context 'invalid pokemon id' do
-      it 'responds with an HTTP 404 status code' do
-        delete :destroy, params: { id: 1337 }
-        expect(response.status).to eq(404)
       end
     end
   end

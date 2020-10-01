@@ -32,19 +32,19 @@ module Api
       head :ok
     end
 
+    # method called during invalid route (see config/routes.rb)
+    def catch_404
+      raise ActionController::RoutingError, params[:path]
+    end
+
     private
 
     def find_pokemon
-      @pokemon = Pokemon.where(id: params[:id]).first
-      head :not_found unless @pokemon
+      @pokemon = Pokemon.find(params[:id])
     end
 
     def pokemon_params
       params.require(:pokemon).permit(%i[name type_1 type_2 total hp attack defense sp_atk sp_def speed generation legendary])
-    end
-
-    def render_errors(errors)
-      render json: { code: '422', message: 'Validation Failed', errors: errors.messages }, status: :unprocessable_entity
     end
   end
 end
