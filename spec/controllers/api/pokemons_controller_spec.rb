@@ -58,4 +58,29 @@ RSpec.describe Api::PokemonsController do
       end
     end
   end
+
+  describe 'PUT #update' do
+    context 'valid information' do
+      let(:params) { { id: pokemon.id, pokemon: { name: 'Picka v2' } } }
+
+      it 'responds successfully with an HTTP 200 status code' do
+        put :update, params: params
+        expect(response).to be_successful
+        expect(response.status).to eq(200)
+      end
+
+      it 'do not create a pokemon in db' do
+        expect { put :update, params: params }.to change { Pokemon.count }.by(0)
+      end
+    end
+
+    context 'invalid information' do
+      let(:params) { { id: pokemon.id, pokemon: { name: '' } } }
+
+      it 'responds with an HTTP 422 status code' do
+        put :update, params: params
+        expect(response.status).to eq(422)
+      end
+    end
+  end
 end

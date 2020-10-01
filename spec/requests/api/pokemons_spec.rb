@@ -60,4 +60,26 @@ RSpec.describe 'Pokemons API' do
       end
     end
   end
+
+  describe 'PUT /api/pokemons/:id' do
+    context 'valid information' do
+      let(:params) { { id: pokemon.id, pokemon: { name: 'Picka v2' } } }
+
+      it 'returns the new pokemon' do
+        put api_pokemon_path(params)
+        expect(json['name']).to eq(params[:pokemon][:name])
+      end
+    end
+
+    context 'invalid information' do
+      let(:params) { { id: pokemon.id, pokemon: { name: '' } } }
+
+      it 'returns validation errors' do
+        put api_pokemon_path(params)
+        expect(json['code']).to eq('422')
+        expect(json['message']).to eq('Validation Failed')
+        expect(json['errors']['name'][0]).to eq("can't be blank")
+      end
+    end
+  end
 end

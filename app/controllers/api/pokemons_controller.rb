@@ -2,7 +2,7 @@
 
 module Api
   class PokemonsController < ApplicationController
-    before_action :find_pokemon, only: [:show]
+    before_action :find_pokemon, only: %i[show update]
 
     def index
       @pokemons = Pokemon.all
@@ -13,6 +13,14 @@ module Api
     def create
       @pokemon = Pokemon.new(pokemon_params)
       if @pokemon.save
+        render :show
+      else
+        render_errors(@pokemon.errors)
+      end
+    end
+
+    def update
+      if @pokemon.update(pokemon_params)
         render :show
       else
         render_errors(@pokemon.errors)
