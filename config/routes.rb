@@ -3,6 +3,6 @@
 Rails.application.routes.draw do
   namespace :api, defaults: { format: 'json' } do
     resources :pokemons
-    match '*path', to: 'pokemons#catch_404', via: :all
+    match '*path', to: 'base#catch_404', via: :all
   end
 end

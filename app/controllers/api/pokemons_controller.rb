@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  class PokemonsController < ApplicationController
+  class PokemonsController < BaseController
     before_action :find_pokemon, only: %i[show update destroy]
 
     def index
@@ -30,11 +30,6 @@ module Api
     def destroy
       @pokemon.destroy
       head :ok
-    end
-
-    # method called during invalid route (see config/routes.rb)
-    def catch_404
-      raise ActionController::RoutingError, params[:path]
     end
 
     private
