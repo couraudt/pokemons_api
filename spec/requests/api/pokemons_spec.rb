@@ -26,16 +26,25 @@ RSpec.describe 'Pokemons API' do
   end
 
   describe 'GET /api/pokemons/:id' do
-    before { get api_pokemon_path(pokemon) }
+    context 'valid pokemon id' do
+      before { get api_pokemon_path(pokemon) }
 
-    it 'has the required attributes with value' do
-      attr.each do |attribute|
-        expect(json[attribute]).to eq(pokemon[attribute])
+      it 'has the required attributes with value' do
+        attr.each do |attribute|
+          expect(json[attribute]).to eq(pokemon[attribute])
+        end
+      end
+
+      it 'has the required number of attributes' do
+        expect(json.count).to eq(attr.count)
       end
     end
 
-    it 'has the required number of attributes' do
-      expect(json.count).to eq(attr.count)
+    context 'invalid pokemon id' do
+      it 'returns no json' do
+        get api_pokemon_path(1337)
+        expect(response.body).to eq('')
+      end
     end
   end
 
@@ -79,6 +88,15 @@ RSpec.describe 'Pokemons API' do
         expect(json['code']).to eq('422')
         expect(json['message']).to eq('Validation Failed')
         expect(json['errors']['name'][0]).to eq("can't be blank")
+      end
+    end
+
+    context 'invalid pokemon id' do
+      let(:params) { { id: 1337, pokemon: { name: 'Picka v2' } } }
+
+      it 'returns no json' do
+        put api_pokemon_path(params)
+        expect(response.body).to eq('')
       end
     end
   end
