@@ -9,7 +9,7 @@ RSpec.describe Pokemon do
   end
 
   context 'validates presence of' do
-    [:name, :type_1, :total, :hp, :attack, :defense, :sp_atk, :sp_def, :speed, :generation].each do |attr|
+    %i[name type_1 total hp attack defense sp_atk sp_def speed generation].each do |attr|
       it "attribute #{attr}" do
         expect(build_stubbed(:pokemon, { attr => nil })).to_not be_valid
       end

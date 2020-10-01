@@ -29,4 +29,33 @@ RSpec.describe Api::PokemonsController do
       end
     end
   end
+
+  describe 'POST #create' do
+    context 'valid information' do
+      let(:params) { { pokemon: attributes_for(:pokemon) } }
+
+      it 'responds successfully with an HTTP 200 status code' do
+        post :create, params: params
+        expect(response).to be_successful
+        expect(response.status).to eq(200)
+      end
+
+      it 'create a pokemon in db' do
+        expect { post :create, params: params }.to change { Pokemon.count }.by(1)
+      end
+    end
+
+    context 'invalid information' do
+      let(:params) { { pokemon: { name: '' } } }
+
+      it 'responds with an HTTP 422 status code' do
+        post :create, params: params
+        expect(response.status).to eq(422)
+      end
+
+      it 'do not create a pokemon in db' do
+        expect { post :create, params: params }.to change { Pokemon.count }.by(0)
+      end
+    end
+  end
 end
