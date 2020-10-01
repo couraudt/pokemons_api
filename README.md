@@ -1,24 +1,31 @@
-# README
+# Pokemon API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Installation
 
-Things you may want to cover:
+### Prerequisites
 
-* Ruby version
+Install Docker and [Docker Compose](https://docs.docker.com/compose/install/)
 
-* System dependencies
+### Build docker app
 
-* Configuration
+```bash
+docker-compose build
+```
 
-* Database creation
+### Migration
 
-* Database initialization
+```bash
+docker-compose exec app rake db:migrate
+```
 
-* How to run the test suite
+### Import csv into db
 
-* Services (job queues, cache servers, search engines, etc.)
+```bash
+docker-compose exec app rake db:seed
+```
 
-* Deployment instructions
+## Start web server
 
-* ...
+```bash
+docker-compose up
+```
