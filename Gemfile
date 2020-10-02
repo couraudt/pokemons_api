@@ -25,8 +25,8 @@ group :test do
 end
 
 group :development do
-  gem 'listen', '~> 3.2'
   gem 'debase'
+  gem 'listen', '~> 3.2'
   gem 'ruby-debug-ide'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
