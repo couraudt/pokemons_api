@@ -14,9 +14,11 @@ ENV APP_HOME /app
 
 WORKDIR $APP_HOME
 
+COPY . ./
+
 RUN bundle config build.nokogiri --use-system-libraries
 
-COPY . ./
+RUN bundle install
 
 RUN chmod +x ./docker-entrypoint.sh
 
