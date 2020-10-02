@@ -5,7 +5,7 @@ module Api
     before_action :find_pokemon, only: %i[show update destroy]
 
     def index
-      @pokemons = Pokemon.all
+      @pokemons = paginate(Pokemon.all)
     end
 
     def show; end

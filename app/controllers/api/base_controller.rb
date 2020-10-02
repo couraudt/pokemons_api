@@ -24,6 +24,16 @@ module Api
       raise ActionController::RoutingError, params[:path]
     end
 
+    # Used in config/initializers/api_pagination.rb
+    def self.current_page_from_params(params = {})
+      params.key?(:page) && params[:page].to_s.match(/\A[0-9]+\Z/) ? params[:page].to_i : 1
+    end
+
+    # Used in config/initializers/api_pagination.rb
+    def self.results_per_page
+      Rails.env.test? ? 5 : 25
+    end
+
     private
 
     def set_default_response_format
